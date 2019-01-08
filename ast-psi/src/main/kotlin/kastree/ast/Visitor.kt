@@ -11,12 +11,12 @@ open class Visitor {
                 visitChildren(imports)
                 visitChildren(decls)
             }
-            is Node.Script -> {
-                visitChildren(anns)
-                visitChildren(pkg)
-                visitChildren(imports)
-                visitChildren(exprs)
-            }
+//            is Node.Script -> {
+//                visitChildren(anns)
+//                visitChildren(pkg)
+//                visitChildren(imports)
+//                visitChildren(exprs)
+//            }
             is Node.Package -> {
                 visitChildren(mods)
             }
@@ -183,6 +183,13 @@ open class Visitor {
             }
             is Node.Expr.BinaryOp.Oper.Infix -> {}
             is Node.Expr.BinaryOp.Oper.Token -> {}
+            is Node.Expr.QualifiedOp -> {
+                visitChildren(lhs)
+                visitChildren(oper)
+                visitChildren(rhs)
+            }
+            is Node.Expr.QualifiedOp.With.Dot -> {}
+            is Node.Expr.QualifiedOp.With.Safe -> {}
             is Node.Expr.UnaryOp -> {
                 visitChildren(expr)
                 visitChildren(oper)

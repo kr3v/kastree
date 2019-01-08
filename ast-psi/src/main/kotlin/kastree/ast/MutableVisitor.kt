@@ -15,12 +15,12 @@ open class MutableVisitor {
                         imports = visitChildren(imports, newCh),
                         decls = visitChildren(decls, newCh)
                     )
-                    is Node.Script -> copy(
-                        anns = visitChildren(anns, newCh),
-                        pkg = visitChildren(pkg, newCh),
-                        imports = visitChildren(imports, newCh),
-                        exprs = visitChildren(exprs, newCh)
-                    )
+//                    is Node.Script -> copy(
+//                        anns = visitChildren(anns, newCh),
+//                        pkg = visitChildren(pkg, newCh),
+//                        imports = visitChildren(imports, newCh),
+//                        exprs = visitChildren(exprs, newCh)
+//                    )
                     is Node.Package -> copy(
                         mods = visitChildren(mods, newCh)
                     )
@@ -187,6 +187,13 @@ open class MutableVisitor {
                     )
                     is Node.Expr.BinaryOp.Oper.Infix -> this
                     is Node.Expr.BinaryOp.Oper.Token -> this
+                    is Node.Expr.QualifiedOp -> copy(
+                        lhs = visitChildren(lhs, newCh),
+                        oper = visitChildren(oper, newCh),
+                        rhs = visitChildren(rhs, newCh)
+                    )
+                    is Node.Expr.QualifiedOp.With.Dot -> this
+                    is Node.Expr.QualifiedOp.With.Safe -> this
                     is Node.Expr.UnaryOp -> copy(
                         expr = visitChildren(expr, newCh),
                         oper = visitChildren(oper, newCh)

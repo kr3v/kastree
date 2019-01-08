@@ -54,7 +54,7 @@ class CorpusTest(val unit: Corpus.Unit) {
     }
 
     companion object {
-        const val debug = false
+        const val debug = true
 
         @JvmStatic @Parameterized.Parameters(name = "{0}")
         fun data() = Corpus.default

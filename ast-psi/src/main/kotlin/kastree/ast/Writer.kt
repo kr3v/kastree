@@ -250,16 +250,17 @@ open class Writer(
                 }
                 is Node.Expr.BinaryOp -> {
                     // Some operations don't have separators
-                    val noSep = oper is Node.Expr.BinaryOp.Oper.Token && oper.token.let {
-                        it == Node.Expr.BinaryOp.Token.RANGE || it == Node.Expr.BinaryOp.Token.DOT ||
-                            it == Node.Expr.BinaryOp.Token.DOT_SAFE
-                    }
+                    val noSep = oper is Node.Expr.BinaryOp.Oper.Token && oper.token == Node.Expr.BinaryOp.Token.RANGE
                     children(listOf(lhs, oper, rhs), if (noSep) "" else " ")
                 }
                 is Node.Expr.BinaryOp.Oper.Infix ->
                     append(str)
                 is Node.Expr.BinaryOp.Oper.Token ->
                     append(token.str)
+                is Node.Expr.QualifiedOp ->
+                    children(listOf(lhs, oper, rhs), "")
+                is Node.Expr.QualifiedOp.With ->
+                    append(str)
                 is Node.Expr.UnaryOp ->
                     if (prefix) children(oper, expr) else children(expr, oper)
                 is Node.Expr.UnaryOp.Oper ->

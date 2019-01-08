@@ -12,12 +12,17 @@ import org.jetbrains.kotlin.psi.KtFile
 import org.jetbrains.kotlin.psi.psiUtil.collectDescendantsOfType
 
 open class Parser(val converter: Converter = Converter) {
-    protected val proj by lazy {
+
+    val env by lazy {
         KotlinCoreEnvironment.createForProduction(
             Disposer.newDisposable(),
             CompilerConfiguration(),
             EnvironmentConfigFiles.JVM_CONFIG_FILES
-        ).project
+        )
+    }
+
+    val proj by lazy {
+        env.project
     }
 
     fun parseFile(code: String, throwOnError: Boolean = true) = converter.convertFile(parsePsiFile(code).also { file ->
